@@ -1,0 +1,19 @@
+version: '3.8'
+
+# Development override for docker-compose.yml
+# This file extends the main docker-compose.yml for local development
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  n8n:
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_LOG_LEVEL=debug
+      - N8N_DIAGNOSTICS_ENABLED=false
+      
+  nginx:
+    # In development, you might want to access n8n directly without nginx
+    # Comment out this service or run: docker-compose up n8n postgres redis qdrant
+    profiles:
+      - production

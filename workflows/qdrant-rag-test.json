@@ -1,0 +1,82 @@
+{
+  "name": "Basic RAG Workflow with Qdrant",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collectionName": "test_collection",
+        "options": {
+          "createCollection": true,
+          "vectorSize": 384
+        }
+      },
+      "name": "Insert to Qdrant",
+      "type": "n8n-nodes-base.qdrant",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "credentials": {
+        "qdrantApi": {
+          "id": "1",
+          "name": "Qdrant API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "collectionName": "test_collection",
+        "limit": 5
+      },
+      "name": "Search in Qdrant",
+      "type": "n8n-nodes-base.qdrant",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "credentials": {
+        "qdrantApi": {
+          "id": "1",
+          "name": "Qdrant API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Insert to Qdrant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert to Qdrant": {
+      "main": [
+        [
+          {
+            "node": "Search in Qdrant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "pinData": {},
+  "meta": {
+    "instanceId": "n8n-qdrant-rag-test"
+  }
+}

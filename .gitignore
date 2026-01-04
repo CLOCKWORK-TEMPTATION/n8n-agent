@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# n8n and Docker related
+.env
+ssl/*.pem
+ssl/*.key
+ssl/*.crt

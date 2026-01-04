@@ -9,22 +9,24 @@ This document verifies that all requirements from the problem statement have bee
 **Status**: COMPLETE
 
 **Implementation**:
-- `.env` file includes S3 configuration variables (lines 20-27):
+- `.env` file includes S3 configuration variables (lines 21-32):
   ```env
-  N8N_DEFAULT_BINARY_DATA_MODE=s3
-  N8N_BINARY_DATA_S3_ENDPOINT=your-s3-endpoint.com
-  N8N_BINARY_DATA_S3_REGION=us-east-1
-  N8N_BINARY_DATA_S3_BUCKET_NAME=n8n-binary-data
-  N8N_BINARY_DATA_S3_ACCESS_KEY_ID=your-access-key
-  N8N_BINARY_DATA_S3_SECRET_ACCESS_KEY=your-secret-key
-  N8N_BINARY_DATA_S3_FORCE_PATH_STYLE=true
+  N8N_DEFAULT_BINARY_DATA_MODE=filesystem  # Change to 's3' for S3 storage
+  # Or uncomment for S3:
+  # N8N_DEFAULT_BINARY_DATA_MODE=s3
+  # N8N_BINARY_DATA_S3_ENDPOINT=your-s3-endpoint.com
+  # N8N_BINARY_DATA_S3_REGION=us-east-1
+  # N8N_BINARY_DATA_S3_BUCKET_NAME=n8n-binary-data
+  # N8N_BINARY_DATA_S3_ACCESS_KEY_ID=your-access-key
+  # N8N_BINARY_DATA_S3_SECRET_ACCESS_KEY=your-secret-key
+  # N8N_BINARY_DATA_S3_FORCE_PATH_STYLE=true
   ```
 - Variables are documented in `.env.example`
 - Instructions provided in README-N8N.md
 
 **Files**:
-- `.env` (lines 20-27)
-- `.env.example` (lines 20-27)
+- `.env` (lines 21-32)
+- `.env.example` (lines 21-32)
 - `README-N8N.md` (S3 configuration section)
 
 ---

@@ -23,16 +23,27 @@ echo "Setting up Let's Encrypt SSL certificate for domain: $DOMAIN"
 echo "Email: $EMAIL"
 echo ""
 
+# Detect docker-compose command (support both v1 and v2)
+if command -v docker-compose &> /dev/null; then
+    DOCKER_COMPOSE_CMD="docker-compose"
+elif command -v docker &> /dev/null && docker compose version &> /dev/null; then
+    DOCKER_COMPOSE_CMD="docker compose"
+else
+    echo "Error: Neither 'docker-compose' nor 'docker compose' command found."
+    echo "Please install Docker Compose."
+    exit 1
+fi
+
 # Check if docker-compose is running
-if ! docker-compose ps | grep -q "Up"; then
+if ! $DOCKER_COMPOSE_CMD ps | grep -q "Up"; then
     echo "Error: Docker containers are not running."
-    echo "Please start the containers with: docker-compose up -d"
+    echo "Please start the containers with: $DOCKER_COMPOSE_CMD up -d"
     exit 1
 fi
 
 # Request SSL certificate from Let's Encrypt
 echo "Requesting SSL certificate from Let's Encrypt..."
-docker-compose run --rm certbot certonly \
+$DOCKER_COMPOSE_CMD run --rm certbot certonly \
     --webroot \
     --webroot-path=/var/www/certbot \
     --email "$EMAIL" \
@@ -50,7 +61,7 @@ if [ $? -eq 0 ]; then
     echo "  ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;"
     echo "  ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;"
     echo ""
-    echo "Then restart nginx: docker-compose restart nginx"
+    echo "Then restart nginx: $DOCKER_COMPOSE_CMD restart nginx"
 else
     echo ""
     echo "Failed to obtain SSL certificate."

@@ -69,7 +69,7 @@ services:
       - QUEUE_HEALTH_CHECK_ACTIVE=true
       
       # S3-compatible object storage for binary data
-      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - N8N_DEFAULT_BINARY_DATA_MODE=${N8N_DEFAULT_BINARY_DATA_MODE:-filesystem}
       - N8N_BINARY_DATA_STORAGE_PATH=/home/node/.n8n/binary-data
       
       # Basic Authentication
@@ -123,7 +123,7 @@ services:
       - QUEUE_BULL_REDIS_DB=${REDIS_DB:-0}
       
       # S3-compatible object storage for binary data
-      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - N8N_DEFAULT_BINARY_DATA_MODE=${N8N_DEFAULT_BINARY_DATA_MODE:-filesystem}
       - N8N_BINARY_DATA_STORAGE_PATH=/home/node/.n8n/binary-data
       
       # General settings
